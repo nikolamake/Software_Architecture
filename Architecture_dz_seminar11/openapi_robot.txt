@@ -1,0 +1,621 @@
+openapi: 3.0.1
+info:
+  title: Сервис роботов-пылесосов
+  version: 0.0.1
+paths:
+  /robots:
+    get:
+      summary: Получения списка устройств
+      tags: 
+        - Robots
+      operationId: getAllRobots
+      responses: 
+        '200':
+          description: Данные об устройствах
+          content: 
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Robots"
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+    post: 
+      summary: Подключения робота-пылесоса
+      tags: 
+        - Robots
+      operationId: createRobotCleaner
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Error'
+      responses: 
+        '200':
+          description: Данные о подключении
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/RobotCleaner'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Error'
+  /robots/{fabrick_number}:
+    delete: 
+      summary: Удаления робота-пылесоса из облака
+      tags: 
+        - Robots
+      operationId: cencelRobotsByNumber
+      parameters: 
+        - name: fabrick_number
+          in: path
+          required: true
+          description: Уникальный id робота
+          schema: 
+            type: integer
+          example: 259
+      responses: 
+        '200':
+          description: Успешный ответ на удаление устройства
+          content: 
+            adplication/json: {}
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            adplication/json: 
+              schema: 
+                $ref: '#/components/schemas/Error'
+  /users:
+    get:
+      summary: Получение списка пользователей
+      tags: 
+        - Users
+      operationId: getAllUsersById
+      responses: 
+        '200':
+          description: Ответ со списком пользователей
+          content: 
+            adplication/json:
+              schema: 
+                $ref: '#/components/schemas/User'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error" 
+    post: 
+      summary: Авторизации пользователя
+      tags: 
+        - Users
+      operationId: createAutUser
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Error'
+      responses: 
+        '200':
+          description: Успешный ответ на авторизацию(регистрацию) пользователя
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/User'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Error'
+  /users/{id}:
+    delete: 
+      summary: Удаление пользователя
+      tags: 
+        - Users
+      operationId: deleteUserById
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: Уникальный id пользователя
+          schema: 
+            type: integer
+          example: 3698
+      responses: 
+        '200':
+          description: Успешный ответ на удаление пользователя
+          content: 
+            adplication/json: {}
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            adplication/json: 
+              schema: 
+                $ref: '#/components/schemas/Error'
+  /groups:
+    get:
+      summary: Получение списка групп пользователей
+      tags: 
+        - Groups
+      operationId: getAllGroupsById
+      responses: 
+        '200':
+          description: Успешный ответ со списком групп
+          content: 
+            adplication/json:
+              schema: 
+                $ref: '#/components/schemas/Groups'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error" 
+    put:
+      summary: Добавление группы
+      tags: 
+        - Groups
+      operationId: putNewGroup
+      responses: 
+        '200':
+          description: Успешный ответ при добавлении группы
+          content: 
+            adplication/json:
+              schema: 
+                $ref: '#/components/schemas/Groups'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"           
+    post: 
+      summary: Регистрация группы
+      tags: 
+        - Groups
+      operationId: createAutGroup
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Error'
+      responses: 
+        '200':
+          description: Успешный ответ на регистрацию группы
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Group'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Error'
+  /groups/{id}:
+    delete: 
+      summary: Удаления группы
+      tags: 
+        - Groups
+      operationId: deleteGroupById
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: Уникальный id группы
+          schema: 
+            type: integer
+          example: 8524
+      responses: 
+        '200':
+          description: Успешный ответ на удаление группы
+          content: 
+            adplication/json: {}
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            adplication/json: 
+              schema: 
+                $ref: '#/components/schemas/Error'
+  /shedules:
+    get:
+      summary: Метод получения списка расписаний
+      tags: 
+        - Shedules
+      operationId: getAllShedulesById
+      responses: 
+        '200':
+          description: Успешный ответ со списком расписаний
+          content: 
+            adplication/json:
+              schema: 
+                $ref: '#/components/schemas/Shedules'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error" 
+    put:
+      summary: Метод обновления расписания
+      tags: 
+        - Shedules
+      operationId: putNewShedule
+      responses: 
+        '200':
+          description: Успешный ответ при обновлении расписания
+          content: 
+            adplication/json:
+              schema: 
+                $ref: '#/components/schemas/Shedules'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"           
+    post: 
+      summary: Метод регистрации расписания
+      tags: 
+        - Shedules
+      operationId: createAutShedule
+      requestBody: 
+        required: true
+        content: 
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Error'
+      responses: 
+        '200':
+          description: Успешный ответ на регистрацию расписания
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Shedule'
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Error'
+  /shedules/{id}:
+    delete: 
+      summary: Метод удаления расписания по ID
+      tags: 
+        - Shedules
+      operationId: deleteSheduleById
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: Уникальный id расписания
+          schema: 
+            type: integer
+          example: 3621
+      responses: 
+        '200':
+          description: Успешный ответ на удаление расписания
+          content: 
+            adplication/json: {}
+        '404':
+          description:  Not Found 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error404"
+        '500':
+          description:  Internal Server Error 
+          content:
+            adplication/json:
+              schema: 
+                $ref: "#/components/schemas/Error500"
+        'default':
+          description: Все остальное
+          content: 
+            adplication/json: 
+              schema: 
+                $ref: '#/components/schemas/Error'
+components:
+  schemas: 
+    RobotCleaner:
+      type: object
+      required: 
+        - resources
+        - fabrick_number
+        - ip_adress
+        - id_group
+        - status
+      properties: 
+        resources:
+          type: integer
+          example: 5
+        fabrick_number:
+          type: integer
+          example: 1485
+        ip_adress:
+          type: string
+          example: 192.128.3.4
+        id_group:
+          type: integer
+          example: 1
+        status:
+          type: string
+          example: Зарядка
+    Robots:
+      type: array
+      items: 
+        $ref: '#/components/schemas/RobotCleaner' 
+    User:
+      type: object
+      required: 
+        - id
+        - hash
+        - question
+      properties: 
+        id:
+          type: integer
+          example: 38
+        hash:
+          type: integer
+          example: 8524
+        question:
+          type: string
+          description: Вопрос-подтверждение
+    Users:
+      type: array
+      items: 
+        $ref: '#/components/schemas/User'
+    Group:
+      type: object
+      required:
+        - id
+        - user_id
+      properties:
+        id:
+          type: integer
+          example: 3621
+        user_id:
+          type: integer
+          example: 587
+    Groups:
+      description: Список групп
+      type: array
+      items:
+        $ref: '#/components/schemas/Group'
+    Shedule:
+      description: Расписания
+      type: object
+      required:
+        - id
+        - day
+        - time
+        - mode
+        - robotCI_id
+        - us_group_id
+        - areas_ci
+      properties:
+        id:
+          type: integer
+          example: 362
+        day:
+          type: integer
+          example: 522222
+        time:
+          type: integer
+          example: 11111
+        mode:
+          type: integer
+          example: 7
+        robotCI_id:
+          type: integer
+          example: 1111111
+        us_group_id:
+          type: integer
+          example: 2222222
+        areas_ci:
+          type: integer
+          example: 3333333
+    Shedules:
+      description: Список расписаний
+      type: array
+      items:
+        $ref: '#/components/schemas/Shedule'      
+    Error404:
+      type: object
+      required: 
+        - code
+        - message
+      properties: 
+        code:
+          type: integer
+          description: '404'
+        message:
+          type: string
+          example: '404 Not Found'
+    Error500:
+      type: object
+      required: 
+        - code
+        - message
+      properties: 
+        code:
+          type: integer
+          description: '500'
+        message:
+          type: string
+          example: '500 Internal Server Error'
+    Error:
+      type: object
+      required: 
+        - code
+        - message
+      properties: 
+        code:
+          type: integer
+        message:
+          type: string
+          example: 'Error'
